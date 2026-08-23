@@ -48,7 +48,7 @@ function getTaskStatus(dueDateStr, dueTimeStr) {
   const diffMs = taskDate - now;
   const diffHours = diffMs / (1000 * 60 * 60);
 
-  if (diffMs < 0) {
+  if (diffMs < -1) {
     return { color: '#ef4444', label: 'Overdue' }; // Red
   } else if (diffHours <= 24) {
     return { color: '#eab308', label: 'Due Soon' }; // Yellow
