@@ -1298,6 +1298,30 @@ select#repeatSelect:focus { border-color: var(--accent); box-shadow: 0 0 0 4px v
 
 #greetingBody { line-height: 1.5; }
 
+ 
+
+/* Quote of the day */
+
+.quote-of-day {
+
+  margin: 1.25rem 0 0 0;
+
+  padding-left: 0.9rem;
+
+  border-left: 2px solid var(--accent);
+
+  color: var(--text-muted);
+
+  font-size: 0.98rem;
+
+  font-style: italic;
+
+  line-height: 1.5;
+
+  max-width: 640px;
+
+}
+
 .greeting-tasks {
 
   list-style: none;
@@ -1361,6 +1385,8 @@ select#repeatSelect:focus { border-color: var(--accent); box-shadow: 0 0 0 4px v
     <h1 id="greetingTitle">Welcome Shaan</h1>
 
     <p id="greetingBody">Loading your day…</p>
+
+    <p class="quote-of-day" id="quoteOfDay" style="display:none;"></p>
 
   </header>
 
@@ -1719,6 +1745,259 @@ const GREETINGS = {
  
 
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+ 
+
+/* ============================================================
+
+   QUOTE OF THE DAY
+
+ 
+
+   Paste your quotes below — ONE QUOTE PER LINE, between the
+
+   two backtick markers. No quotation marks, no commas needed
+
+   at the ends of lines. Blank lines are ignored.
+
+ 
+
+   Example:
+
+     The only way to do great work is to love what you do.
+
+     Simplicity is the ultimate sophistication.
+
+ 
+
+   The same quote shows for the entire day and rotates to the
+
+   next one each calendar day, cycling back to the start after
+
+   the last quote.
+
+   ============================================================ */
+
+const QUOTES_RAW = \`
+
+<!-- PASTE QUOTES BELOW THIS LINE -->
+
+The bitterness of studying is preferable to the bitterness of ignorance
+Listening is not obeying. It is considering.
+True character is revealed in the choices a human being makes under pressure- the greater the pressure, the greater the revelation, the truer the choice to the characters essential nature.
+There are two things that I think define powerful creativity: curiosity and obsession.
+It is fortunate, that each generation does not comprehend its own ignorance. We are thus enabled to call our ancestors barbarous.
+Have something to bring to the table, because that will make you more welcome.
+Tenacity is a virtue, but its not always crucial for everyone to observe how hard you work at something.
+Once you learn how to die, you learn how to live.
+We all laughed, a nervous laughter that comes when the devil is within earshot.
+Colonialism only works if the colonizers are convinced of their superiority and the colonized of their inferiority.
+you need the support of the three As to lead Pakistan - Allah, the army and America
+Then they sowed divisions among them that they should shed one anothers blood and go to sleep under the opiate of serfdom so that the leech of imperialism might go on sucking their blood without interruption.
+I have long since believed that the people who are richest are the people who cannot be bought, for any price.
+Read anew the lessons of Truthfulness, Justice, and Bravery To you will be given the task of leading the world
+These people only have to study the colonial history of the past two centuries to realize that wherever an alien culture was imposed on an indigenous people it caused mass upheaval, disruption, and destruction to their way of life. From the Aborigines of Australia to the Indians of the Americas and most of Africa, the local people fell between two stools in the name of modernization.
+But we are not doing this for ourselves. We are doing it for all the just causes of the world, at a time of skepticism. Optimism and the hope of the peoples will again be born, because the negative forces will not prevail.
+Hence I have no mercy or compassion in me for a society that will crush people, and then penalize them for not being able to stand up under the weight.
+I was to learn later that Elijah Muhammads tales, like this one of Yacub, infuriated the Muslims of the East. While at Mecca, I reminded them that it was their fault, since they themselves hadnt done enough to make real Islam known in the West. Their silence left a vacuum into which any religious faker could step and mislead our people.
+You are as useful as I am, but you are not aware of how useful your contribution is to the society that sacrifices you.
+I have lived inside the monster and I know its entrails; my sling is that of David
+These gifts today are naught, for we cannot give them the greatest gift of all, which is freedom and independence.
+War is not monstrous for making corpses of men so much as it is for making machines of them. And woe to those who have no use in war except to feed the machines.
+A freedom fighter learns the hard way that it is the oppressor who defines the nature of the struggle, and the oppressed is often left no recourse but to use methods that mirror those of the oppressor.
+To see the world, things dangerous to come to, to see behind walls, to draw closer, to find each other and to feel. That is the purpose of life
+I have always believed that to be a freedom fighter one must suppress many of the personal feelings that make one feel like a separate individual rather than part of a mass movement.
+Violence is a tool. It is meant to shock. To change. Instead, they normalize and celebrate it. And create a culture of exploitation where they are so entitled to sex and power that when they are told no, they pull a sword and do as they like.
+We live in a world that treats the dead better than the living. We, the living, are askers of questions and givers of answers, and we have other grave defects unpardonable by a system that believes death, like money, improves people.
+Its worthwhile to die for things without which its not worthwhile to live.
+Be absolute for death; for either death or life shall be the sweeter.
+And the days began to walk. And they, the days, made us. And thus we were born, the children of the days, the discoverers, lifes searchers.
+On this day in 1492 Granada fell, and with it fell Muslim Spain. And in the years that followed, in distant bonfires, the same flames would consume the books of Muslims, of Jews and of Americas indigenous peoples. Fire was the only fate for words born in hell.
+You have no enemies? How can that be? Did you never tell the truth or stand up for justice?
+Of course you cannot know a man completely, his character, his principles, sense of judgment, not till hes shown his colors, ruling the people, making laws. Experience, theres the test.
+There is a poor, blind Samson in this land, Shorn of his strength and bound in bonds of steel, Who may, in some grim revel, raise his hand, And shake the pillars of this Commonweal, Till the vast Temple of our liberties A shapeless mass of wreck and rubbish lies.
+I have walked that long road to freedom. I have tried not to falter; I have made missteps along the way. But I have discovered the secret that after climbing a great hill, one only finds that there are many more hills to climb. I have taken a moment here to rest, to steal a view of the glorious vista that surrounds me, to look back on the distance I have come. But I can rest only for a moment, for with freedom come responsibilities, and I dare not linger, for my long walk is not yet ended.
+By all means, be a storm inside, but save your movement and wind till you know your purpose.
+The destroyer of a civilization too often resembles its founders.
+And it was not possible to go back again, back over those long-travelled roads that led nowhere.
+TO SEE THEM FROM ABOVE: the roving herds of beasts, the rivers carving stone, the rituals of man in all their varied panoply, to see the clouds roil over the patchwork latifundia of Asian plains, to see the mines of our home, is to remember the patterns of the world, and the majesty and complication and impermeable obscurity of distant lands. It is to remember how few people you know. How many do not know you. How many will soon forget you. How many praise you today to offer contempt tomorrow. Permanence of fame, power, dominion of the individual, are illusions. All that will be measured, all that will last, is your mastery of yourself.
+Everything in this world is either endurable or unendurable. If its endurable, endure. If its unendurable, then follow your mother.
+Man is condemned to be free, because once thrown into this world he is responsible for everything that he does.
+Theres always more to find in ourselves.
+The legends of our age die one by one, like autumn leaves; and when they are gone, will we be lesser for their absence?
+Many migrants like us were driven and pursued, in the manner of characters in a Greek play, down the paths of defeat; but luck must have been with us, for we somehow survived. . .
+But I know by now that voice of reason is the enemy. Inside me there is a coward who fears discomfort. That coward will offer solace in the form of excuses. But it is the coward who grooms a man for his defeats. The coward who makes him accept them because he is accustomed to finding a good reason to quit. The coward inside can only be killed one way.
+Even so, I tell the comrades you can only die once, so do not die a thousand times worrying about it.
+They operated through someone elses power—the oppressors—and they were not free as long as they had to reject some part of themselves.
+You cannot win them over by drawing the line of demarcation, saying you are on this side and I am on the other; that shows a lack of consciousness.
+the revolt in the Rif . . . is not an isolated incident, but an outbreak of the change and realignment that have entered the world. Let us be Moors . . . we who will probably die by the hand of Spain.
+If this is a democracy, obviously it is a bourgeois democracy limited to the middle and upper classes. Only they can afford to participate in it.
+Let us go on outdoing ourselves; a revolutionary man always transcends himself or otherwise he is not a revolutionary man, so we always do what we ask of ourselves or more than what we know we can do.
+Calamity has hardened me and turned my mind to steel.
+Indigenous is not original
+Its this: that at a certain point in our lives, we lose control of whats happening to us, and our lives become controlled by fate. Thats the worlds greatest lie.
+For a friend with an understanding heart is worth no less than a brother.
+The Self is a tangled knot of cords. Reflection is how you sort them.
+As the saying went, El Salvador is Spanish for Vietnam
+Learning to live as a man of conscience means deciding that your loyalty to the people whom you love is always more important than whatever lingering loyalty you may sometimes feel to other mens judgment on your manhood
+Loving practice is not aimed at simply giving an individual greater life satisfaction; it is extolled as the primary way we end domination and oppression.
+Four things do not come back: the spoken word, the sped arrow, the past life, and the neglected opportunity
+through the act of reading my words, the patterns that form your thoughts become an imitation of the patterns that once formed mine. And in that way I live again, through you
+The Anguish of Oppression, the Voice of Art
+Either give me freedom or give me two yards place for my grave; I do not want to go back to a slave country
+Do not think that I have forgotten Palestine. The memory of Palestine will be in my mind as long as I live.
+If the mortal sin of the suicide is greed, to hoard stillness and calm for yourself while dispersing your riotous internal pain among all those who survive you, then the mortal sin of the martyr must be pride, the vanity, the hubris to believe not only that your death could mean more than your living, but that your death could mean more than death itself—which, because it is inevitable, means nothing.
+The surest way to kill a race is to kill its religion and its ideals. ... This is to kill the souls of a people. And when the spirit is killed, what remains?
+Never argue fully for an idea you only half believe in
+Home isnt where youre from, its where you find light when all grows dark
+Grief, more than sorrow, might unite us in fragility in the darkness
+Was it possible, Juan sometimes wondered, to predict political outcomes from the symptoms of individual citizens? What was the prognosis for a whole country that had been traumatized?
+Everything new is going to suck for the first few days, but it will get better.
+Indeed, with hardship [will be] ease
+Climate change is the ultimate betrayal of intergenerational equity. It imposes costs on future generations that the current generation has no direct incentives to fix
+Life will begin again when the tyrant has been vanquished It will be our beginning when you have reached your limits
+Youre not gonna win living someone elses dream. Do hard things, but do your things.
+Its the possibility of having a dream come true that makes life interesting
+For her, every day was the same, and when each day is the same as the next, its because people fail to recognize the good things that happen in their lives every day that the sun rises
+There is only one thing that I dread: not to be worthy of my sufferings
+What you have experienced, no power on earth can take from you. Not only our experiences, but all we have done, whatever great thoughts we may have had, and all we have suffered, all this is not lost, though it is past; we have brought it into being. Having been is also a kind of being, and perhaps the surest kind.
+To live forever through Art.
+Verily the lust for comfort murders the passion of the soul, and then walks grinning in the funeral.
+Unlimited tolerance must lead to the disappearance of tolerance. If we extend unlimited tolerance even to those who are intolerant, if we are not prepared to defend a tolerant society against the onslaught of the intolerant, then the tolerant will be destroyed, and tolerance with them
+
+<!-- PASTE QUOTES ABOVE THIS LINE -->
+
+\`;
+
+ 
+
+// Parse into a clean array: split on newlines, trim, drop blanks
+
+// and the placeholder marker comments.
+
+const QUOTES = QUOTES_RAW
+
+  .split('\\n')
+
+  .map(line => line.trim())
+
+  .filter(line => line.length > 0 && !line.startsWith('<!--'));
+
+ 
+
+// Days elapsed since the Unix epoch, in LOCAL time — stable for a
+
+// whole calendar day, increments by one at local midnight.
+
+function dayIndex() {
+
+  const now = new Date();
+
+  const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  return Math.floor(localMidnight.getTime() / 86400000);
+
+}
+
+ 
+
+// Small deterministic PRNG (mulberry32) so a given seed always yields
+
+// the same sequence — no Math.random(), so the result is stable per day.
+
+function seededRandom(seed) {
+
+  let a = seed >>> 0;
+
+  return function () {
+
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+
+  };
+
+}
+
+ 
+
+// Fisher–Yates shuffle of [0..n-1] driven by a seeded PRNG.
+
+function seededShuffleIndices(n, seed) {
+
+  const arr = Array.from({ length: n }, (_, i) => i);
+
+  const rand = seededRandom(seed);
+
+  for (let i = n - 1; i > 0; i--) {
+
+    const j = Math.floor(rand() * (i + 1));
+
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+
+  }
+
+  return arr;
+
+}
+
+ 
+
+// Pick today's quote in a shuffled-but-stable order. The list is shuffled
+
+// per "cycle" (each full pass through all quotes), and today's position
+
+// within the current cycle selects the quote. Every quote appears once
+
+// before any repeats, and the order differs from cycle to cycle.
+
+function quoteForToday() {
+
+  const n = QUOTES.length;
+
+  if (n === 0) return null;
+
+  if (n === 1) return QUOTES[0];
+
+ 
+
+  const d = dayIndex();
+
+  // Which cycle are we in, and how far into it? Guard against negatives.
+
+  const cycle = Math.floor(d / n);
+
+  const posInCycle = ((d % n) + n) % n;
+
+  // Seed the shuffle by the cycle number so each cycle reorders the list,
+
+  // but stays identical for every day within that cycle.
+
+  const order = seededShuffleIndices(n, cycle + 1);
+
+  return QUOTES[order[posInCycle]];
+
+}
+
+ 
+
+function renderQuote() {
+
+  const el = document.getElementById('quoteOfDay');
+
+  const q = quoteForToday();
+
+  if (!q) { el.style.display = 'none'; return; }
+
+  el.textContent = q;
+
+  el.style.display = 'block';
+
+}
 
  
 
@@ -2154,7 +2433,7 @@ function renderTasks() {
 
     const repeatChip = row.isRepeat
 
-      ? '<span class="repeat-chip" title="' + escapeHtml(describeRepeat(row.repeat)) + '">🔁 Repeats</span>'
+      ? '<span class="repeat-chip" title="' + escapeHtml(describeRepeat(row.repeat)) + '">Repeats</span>'
 
       : '';
 
@@ -2192,9 +2471,9 @@ function renderTasks() {
 
         <div class="task-meta">
 
-          <span>📅 \${formattedDate}</span>
+          <span>\${formattedDate}</span>
 
-          \${row.dueTime ? \`<span>⏰ \${row.dueTime}</span>\` : ''}
+          \${row.dueTime ? \`<span>\${row.dueTime}</span>\` : ''}
 
           \${repeatChip}
 
@@ -2822,6 +3101,8 @@ setDefaultTime();
 
  
 
+renderQuote();
+
 loadTasks();
 
 </script>
@@ -2847,3 +3128,4 @@ initDb().then(() => {
   });
 
 });
+
